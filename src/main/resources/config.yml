@@ -1,0 +1,8 @@
+rtp:
+  min_radius: 100  # Minimum distance from current position
+  max_radius: 500  # Maximum distance from current position (Decrease it if tps issues)
+  max_attempts: 10  # Max tries to find safe spot before giving up
+
+messages:
+  no_permission: "You don't have permission to use this command."
+  no_safe_spot: "Couldn't find a safe spot to teleport."

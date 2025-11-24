@@ -1,0 +1,13 @@
+name: RandomTP
+main: org.Rimuru.random.RTP
+version: 1.0
+api-version: 1.21
+commands:
+  rtp:
+    description: Randomly teleports you
+    usage: /rtp
+    permission: rtp.use
+permissions:
+  rtp.use:
+    description: Allows using /rtp
+    default: op
