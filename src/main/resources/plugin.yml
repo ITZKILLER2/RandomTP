@@ -7,6 +7,17 @@ commands:
     description: Randomly teleports you
     usage: /rtp
     permission: rtp.use
+
+  rtpcd:
+    description: Check RTP cooldown
+    usage: /rtpcd
+    permission: op
+
+  changecd:
+    description: Change the RTP cooldown time.
+    usage: /changecd <seconds>
+    permission: op
+
 permissions:
   rtp.use:
     description: Allows using /rtp

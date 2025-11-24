@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class RtpCommand implements CommandExecutor {
 
@@ -31,15 +32,23 @@ public class RtpCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
 
-        Player player = (Player) sender;
-
         if (!player.hasPermission("rtp.use")) {
             player.sendMessage(plugin.getConfig().getString("messages.no_permission", "No permission!"));
+            return true;
+        }
+
+        UUID uuid = player.getUniqueId();
+
+        // ===== COOLDOWN CHECK =====
+        long cdRemaining = plugin.getCooldownRemaining(uuid);
+        if (cdRemaining > 0) {
+            long sec = cdRemaining / 1000;
+            player.sendMessage("§cYou must wait §e" + sec + "s §cbefore using /rtp again!");
             return true;
         }
 
@@ -56,11 +65,15 @@ public class RtpCommand implements CommandExecutor {
         // TELEPORT + EFFECTS
         player.teleport(target);
 
-        // 4 seconds of blindness
+        // Apply blindness
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false));
 
+        // Title
         String coords = String.format("x=%d, y=%d, z=%d", target.getBlockX(), target.getBlockY(), target.getBlockZ());
         player.sendTitle(plugin.gold("Teleported at"), plugin.gold(coords), 10, 60, 20);
+
+        // ACTIVATE COOLDOWN
+        plugin.activateCooldown(uuid);
 
         return true;
     }
@@ -79,11 +92,9 @@ public class RtpCommand implements CommandExecutor {
             double z = current.getZ() + dist * Math.sin(theta);
 
             int y = world.getHighestBlockYAt((int) x, (int) z);
-            Location loc = new Location(world, x + 0.5, y + 1, z + 0.5); // center of block
+            Location loc = new Location(world, x + 0.5, y + 1, z + 0.5);
 
-            if (isSafeLocation(loc)) {
-                return loc;
-            }
+            if (isSafeLocation(loc)) return loc;
         }
         return null;
     }
