@@ -1,8 +1,6 @@
 package org.Rimuru.random;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 public class ChangeCdCommand implements CommandExecutor {
@@ -14,39 +12,38 @@ public class ChangeCdCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Players only.");
+            sender.sendMessage(plugin.msg("errors.players_only"));
             return true;
         }
 
         if (!player.hasPermission("rtp.admin")) {
-            player.sendMessage("§cYou do not have permission to change cooldowns!");
+            player.sendMessage(plugin.msg("errors.no_permission"));
             return true;
         }
 
         if (args.length != 1) {
-            player.sendMessage("§eUsage: §b/changecd <seconds>");
+            player.sendMessage(plugin.msg("admin.usage_changecd"));
             return true;
         }
 
         try {
-            int newCd = Integer.parseInt(args[0]);
-            if (newCd < 0) {
-                player.sendMessage("§cCooldown must be 0 or higher.");
-                return true;
-            }
+            int cd = Integer.parseInt(args[0]);
+            if (cd < 0) return true;
 
-            plugin.getConfig().set("cooldown.time", newCd);
+            plugin.getConfig().set("cooldown.time", cd);
             plugin.saveConfig();
 
-            player.sendMessage("§aRTP cooldown updated to §e" + newCd + " seconds§a.");
+            player.sendMessage(
+                    plugin.msg("admin.cooldown_updated")
+                            .replace("{time}", String.valueOf(cd))
+            );
 
         } catch (NumberFormatException e) {
-            player.sendMessage("§cInvalid number! Example: /changecd 60");
+            player.sendMessage(plugin.msg("admin.invalid_number"));
         }
-
         return true;
     }
 }

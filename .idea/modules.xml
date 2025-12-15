@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RTP.iml" filepath="$PROJECT_DIR$/RTP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/RTP.iml" filepath="$PROJECT_DIR$/.idea/RTP.iml" />
     </modules>
   </component>
 </project>

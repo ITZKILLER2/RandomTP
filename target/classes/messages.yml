@@ -1,0 +1,17 @@
+rtp:
+  title: "&6&lTeleported at"
+  subtitle: "&eX: &b{x} &eY: &b{y} &eZ: &b{z}"
+
+errors:
+  players_only: "&cPlayers only."
+  no_permission: "&cYou do not have permission!"
+  no_safe_spot: "&cNo safe location found!"
+
+cooldown:
+  wait: "&cYou must wait &e{time}s &cbefore using /rtp again!"
+  ready: "&aYou can use /rtp right now!"
+
+admin:
+  cooldown_updated: "&aRTP cooldown updated to &e{time}s&a."
+  invalid_number: "&cInvalid number! Example: /changecd 60"
+  usage_changecd: "&eUsage: &b/changecd <seconds>"

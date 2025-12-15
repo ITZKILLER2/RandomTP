@@ -1,7 +1,7 @@
 name: RandomTP
 main: org.Rimuru.random.RTP
 version: 1.0
-api-version: 1.21
+api-version: "1.20"
 commands:
   rtp:
     description: Randomly teleports you
@@ -17,6 +17,11 @@ commands:
     description: Change the RTP cooldown time.
     usage: /changecd <seconds>
     permission: op
+
+  rtpreload:
+    description: Reload RTP configs
+    usage: /rtpreload
+    permission: rtp.admin
 
 permissions:
   rtp.use:

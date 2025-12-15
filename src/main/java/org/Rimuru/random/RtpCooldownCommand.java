@@ -1,8 +1,6 @@
 package org.Rimuru.random;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 public class RtpCooldownCommand implements CommandExecutor {
@@ -17,7 +15,7 @@ public class RtpCooldownCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Players only.");
+            sender.sendMessage(plugin.msg("errors.players_only"));
             return true;
         }
 
@@ -25,11 +23,12 @@ public class RtpCooldownCommand implements CommandExecutor {
 
         if (left > 0) {
             long sec = left / 1000;
-            player.sendMessage("§eRTP Cooldown: §c" + sec + "s remaining.");
+            player.sendMessage(
+                    plugin.msg("cooldown.wait").replace("{time}", String.valueOf(sec))
+            );
         } else {
-            player.sendMessage("§aYou can use /rtp right now!");
+            player.sendMessage(plugin.msg("cooldown.ready"));
         }
-
         return true;
     }
 }
